@@ -4,15 +4,6 @@
 *   **Fluxo de Dados:** Unidirecional e Cíclico (Store -> Queue -> Sync).
 *   **Princípio:** O Backend (NestJS) confia cegamente na consistência do Banco (Rust).
 
-*   Unable to render rich display
-
-Parse error on line 8:
-...Angular -->|1. Sync (JSON Batch)| NestJS
------------------------^
-Expecting 'SQE', 'DOUBLECIRCLEEND', 'PE', '-)', 'STADIUMEND', 'SUBROUTINEEND', 'PIPE', 'CYLINDEREND', 'DIAMOND_STOP', 'TAGEND', 'TRAPEND', 'INVTRAPEND', 'UNICODE_TEXT', 'TEXT', 'TAGSTART', got 'PS'
-
-For more information, see https://docs.github.com/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams#creating-mermaid-diagrams
-
 ```mermaid
 graph TD
     User((Usuário)) -->|Interage| Angular[Frontend PWA<br/>Angular + Dexie.js]
@@ -21,13 +12,14 @@ graph TD
         Angular <-->|Leitura/Escrita Imediata| IndexedDB[(IndexedDB<br/>Dados + Fila Sync)]
     end
     
-    Angular -->|1. Sync "(JSON Batch)"| NestJS[BFF Middleware<br/>NestJS + Passport]
+    Angular -->|1. Sync JSON Batch| NestJS[BFF Middleware<br/>NestJS + Passport]
     Angular -->|2. Upload Arquivo| R2[Cloudflare R2<br/>Object Storage]
     
     subgraph "Seu Ecossistema"
         NestJS -->|3. Get Presigned URL| R2
-        NestJS <-->|4. HTTP REST (KV Ops)| RustDB[(Seu Banco LSM-KV<br/>Rust)]
+        NestJS <-->|4. HTTP REST - KV Ops| RustDB[(Seu Banco LSM-KV<br/>Rust)]
     end
+
 ```
 
 ---
