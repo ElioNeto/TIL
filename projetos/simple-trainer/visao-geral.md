@@ -78,15 +78,3 @@ Para aproveitar o `scan_prefix` do seu banco, as chaves seguirão uma hierarquia
 *   [ ] Implementar o "Sync Manager" no Angular (consumir fila e enviar pro NestJS).
 *   [ ] Implementar o Upload de Imagem (Angular pede URL pro Nest -> Sobe pro R2 -> Salva link no objeto).
 *   [ ] Teste de "Modo Avião": Usar o app, desligar net, ligar net, verificar se os dados chegaram no banco Rust.
-
----
-
-### ⚠️ Pontos de Atenção (Checklist de Riscos)
-
-1.  **Performance do `scan` no Rust:** Como conversamos, se não otimizar o filtro de prefixo para ocorrer *antes* de carregar o HashMap, o banco vai engasgar com muitos dados. Esse é o ponto mais crítico do sistema.
-2.  **Conflitos de Edição:** No modelo "Last Write Wins" (baseado em timestamp), se dois dispositivos editarem o mesmo treino ao mesmo tempo, o último relógio vence. Para um MVP, isso é aceitável.
-3.  **Segurança do Banco:** O banco Rust **não deve** ficar exposto para a internet pública. Ele deve rodar em uma rede privada (ex: Docker Network) acessível apenas pelo container do NestJS.
-
-**Conclusão:** O plano está sólido, moderno e tecnicamente desafiador na medida certa (construir o próprio banco é um aprendizado enorme). A separação em camadas garante que seu frontend e backend de negócio sobrevivam mesmo que você decida reescrever o banco inteiro do zero no futuro.
-
-Mãos à obra! 🚀
